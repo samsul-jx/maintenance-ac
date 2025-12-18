@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Form Maintenance AC</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    label { display: block; margin-top: 10px; }
+    input, select, textarea, button { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
+    button { background-color: #4CAF50; color: white; border: none; cursor: pointer; margin-top: 15px; }
+    button:hover { background-color: #45a049; }
+  </style>
+</head>
+<body>
+
+<h2>Form Maintenance AC</h2>
+
+<form id="acForm">
+  <label for="ac_id">AC ID:</label>
+  <input type="text" id="ac_id" name="ac_id" required>
+
+  <label for="status">Status:</label>
+  <select id="status" name="status" required>
+    <option value="">-- Pilih Status --</option>
+    <option value="OK">OK</option>
+    <option value="Perbaikan">Perbaikan</option>
+    <option value="Ganti Sparepart">Ganti Sparepart</option>
+  </select>
+
+  <label for="catatan">Catatan:</label>
+  <textarea id="catatan" name="catatan" rows="4"></textarea>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+const form = document.getElementById('acForm');
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const data = {
+    ac_id: form.ac_id.value,
+    status: form.status.value,
+    catatan: form.catatan.value
+  };
+
+  fetch("https://script.google.com/macros/s/AKfycbwS70BnO2dFZELsYSewcRuq-Q3rt-40jvx4sMhit9S8lqfWOO-mOOtdw4rJ3eJXK3Tf/exec", {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(response => {
+    alert("Data tersimpan!");
+    form.reset();  // clear form
+  })
+  .catch(error => alert("Error: " + error));
+});
+</script>
+
+</body>
+</html>
